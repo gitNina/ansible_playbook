@@ -1,0 +1,17 @@
+- name: Konfiguracja servera WWW na platforme Nginx
+  hosts: webservers
+  become: True
+  tasks:
+    - name: Instalacja Nginx
+      apt: name=nginx update_cache=yes
+    - name: Kopiowanie pliku konfiguracyjnego Nginx 
+      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+    - name: Konfiguracja
+      file: >
+        dest=/etc/nginx/sites-enabled/default
+        src=/etc/nginx/sites-available/default
+        state=link
+    - name: Kopiowanie index.html
+      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html mode=0644
+    - name: Restart Nginx 
+      service: name=nginx state=restarted      
