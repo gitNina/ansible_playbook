@@ -1,0 +1,8 @@
+- name: Wyswietlenie wyniku modulu command
+  hosts: vagrant1
+  tasks:
+    - name: Zapisywanie wyniku polecenia id
+      command: id -un
+      register: login
+    - debug: var=login
+    - debug: msg="Zalogowano jako uzytkownik {{ login.stdout }}"  

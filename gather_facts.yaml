@@ -1,0 +1,5 @@
+- name: Wyswietlanie informacji o systemach operacyjnych
+  hosts: all
+  gather_facts: True 
+  tasks:
+  - debug: var=ansible_distribution
